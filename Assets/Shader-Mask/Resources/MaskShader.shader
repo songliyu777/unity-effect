@@ -34,7 +34,10 @@ Shader "Custom/MaskShader"
 			"PreviewType" = "Plane"
 			"CanUseSpriteAtlas" = "True"
 		}
- 
+		//  if（referenceValue&readMask comparisonFunction stencilBufferValue&readMask）
+		// 通过像素
+		// else
+		// 抛弃像素
 		Stencil
 		{
 			Ref[_Stencil]
