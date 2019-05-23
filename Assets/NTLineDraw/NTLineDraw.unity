@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tbnLen: 0.1
-  maxShowNum: 0
+  maxShowNum: 2821
   showNormal: 1
   showTangent: 1
   showBiTangent: 1
