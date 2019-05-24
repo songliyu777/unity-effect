@@ -12,6 +12,7 @@ public class NTBLineScript : MonoBehaviour {
     public bool showBiTangent = true;
 
     MeshFilter meshFilter;
+    SkinnedMeshRenderer meshRenderer;
     Mesh sharedMesh;
 
     Matrix4x4 localToWorld;
@@ -20,10 +21,27 @@ public class NTBLineScript : MonoBehaviour {
     private void OnDrawGizmos()
     {
         meshFilter = GetComponent<MeshFilter>();
-        sharedMesh = meshFilter.sharedMesh;
+        if(meshFilter == null)
+        {
+            meshRenderer = GetComponent<SkinnedMeshRenderer>();
+            sharedMesh = meshRenderer.sharedMesh;
+        }
+        else
+        {
+            sharedMesh = meshFilter.sharedMesh;
+        }
 
-        localToWorld = meshFilter.transform.localToWorldMatrix;
-        localToWorldInverseTranspose = localToWorld.inverse.transpose;
+        if(meshFilter)
+        {
+            localToWorld = meshFilter.transform.localToWorldMatrix;
+            localToWorldInverseTranspose = localToWorld.inverse.transpose;
+        }
+        else if(meshRenderer)
+        {
+            meshRenderer.updateWhenOffscreen = true;
+            localToWorld = meshRenderer.rootBone.localToWorldMatrix;  
+            localToWorldInverseTranspose = localToWorld.inverse.transpose;
+        }
 
         Vector3[] vertices = sharedMesh.vertices;
         Vector3[] normals = sharedMesh.normals;
@@ -79,8 +97,8 @@ public class NTBLineScript : MonoBehaviour {
         for (int i = 0; i < len; i++)
         {
             Vector3 vertexData = vertexMatrix.MultiplyPoint(vertexs[i]);
-
             Vector3 vectorData = vectorMatrix.MultiplyVector(vectors[i]);
+
             vectorData.Normalize();
             Gizmos.DrawLine(vertexData, vertexData + vectorData * vectorLen);
         }
