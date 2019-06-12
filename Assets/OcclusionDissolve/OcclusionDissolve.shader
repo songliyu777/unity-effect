@@ -86,9 +86,9 @@ Shader "Customer/OcclusionDissolve"
 			}
 			return fixed4(color, 1);
 		}
-			ENDCG
+		ENDCG
 
-			SubShader
+		SubShader
 		{
 			Tags{ "RenderType" = "Opaque" }
 				Pass
