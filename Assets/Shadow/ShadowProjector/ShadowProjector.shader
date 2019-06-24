@@ -56,14 +56,16 @@ Shader "UnityEffects/ShadowProjector" {
 				//a += tex2D(_ShadowTex, uv + _ShadowTex_TexelSize.xy * _bulerWidth * float2(0,-1)).a;
 
 				//a = a/5;
-				if(a > 0)
-				{
-					return  float4(1,1,1,1) * (1 - _shadowfactor * a);
-				}
-				else
-				{
-					return float4(1,1,1,1) ;
-				}
+				float edge = step(0, a);
+				return float4(1,1,1,1) * (1 - _shadowfactor * a * edge);
+				// if(a > 0)
+				// {
+				// 	return  float4(1,1,1,1) * (1 - _shadowfactor * a);
+				// }
+				// else
+				// {
+				// 	return float4(1,1,1,1) ;
+				// }
 			}
 
 			ENDCG

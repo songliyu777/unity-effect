@@ -40,7 +40,7 @@ public class ShadowProjector : MonoBehaviour
          {
              if(trans.gameObject.layer == LayerMask.NameToLayer("ShadowCaster"))
              {
-                 _shadowCasterList.Add(trans.gameObject.GetComponent<Renderer>());
+                 _shadowCasterList.Add(trans.gameObject.GetComponentInChildren<SkinnedMeshRenderer>());
              }
          }
 

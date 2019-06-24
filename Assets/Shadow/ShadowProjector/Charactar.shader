@@ -47,6 +47,8 @@ Shader "QinYou/Charactar" {
 
 			#include "UnityCG.cginc"
 
+			uniform float _Cutoff; 
+
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			fixed4 _TintColor;
@@ -90,12 +92,12 @@ Shader "QinYou/Charactar" {
 				o.flowTexcoord = TRANSFORM_TEX(v.texcoord, _FlowTex);
 				#endif
 				o.normal   = mul ((float3x3)UNITY_MATRIX_IT_MV, v.normal);
-
 				#if _FRESNEL_ON
-					float4 fviewDir;
-					fviewDir.xyz = ObjSpaceViewDir(v.vertex);
-					fviewDir.w = 0;
-					o.viewDir = mul(UNITY_MATRIX_MV, fviewDir);
+					float4 viewDir;
+					viewDir.xyz = ObjSpaceViewDir(v.vertex);
+					viewDir.w = 0;
+					//o.viewDir = mul(UNITY_MATRIX_MV, viewDir);
+					o.viewDir = float4(UnityObjectToViewPos(viewDir), 1);
 				#else
 					o.viewDir = 1;
 				#endif
@@ -104,7 +106,7 @@ Shader "QinYou/Charactar" {
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.texcoord); 
+				fixed4 col = tex2D(_MainTex, i.texcoord);
 				col.rgb *= _TintColor.rgb * 2;
 				col.a *= _TintColor.a;
 				#ifndef _FLOWOVERLAY_OFF
