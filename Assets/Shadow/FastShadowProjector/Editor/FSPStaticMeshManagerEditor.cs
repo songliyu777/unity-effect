@@ -10,10 +10,10 @@ public class FSPStaticMeshManagerEditor
 	public static List<ShadowReceiver> currentStaticReceivers;
 
 	static FSPStaticMeshManagerEditor() {
-		EditorApplication.playmodeStateChanged += OnPlaymodeStateChanged;
+		EditorApplication.playModeStateChanged += OnPlaymodeStateChanged;
 	}
 
-	static void OnPlaymodeStateChanged()
+	static void OnPlaymodeStateChanged(PlayModeStateChange state)
 	{
 		if (!EditorApplication.isPlaying && EditorApplication.isPlayingOrWillChangePlaymode) {
 			TraverseReceivers();
